@@ -4,138 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎄 A Christmas Surprise for You</title>
-    <!-- Open Graph for WeChat sharing -->
     <meta property="og:title" content="🎄 A Special Christmas Gift for You">
-    <meta property="og:description" content="Click to receive a special Christmas surprise">
+    <meta property="og:description" content="From screen to starlight, from code to romance">
     <meta property="og:image" content="https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=800&q=80">
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background: linear-gradient(to bottom, #0a1a2d, #0c2461);
+            background: #000;
             color: white;
             min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            background: radial-gradient(ellipse at center, #0c2461 0%, #000 70%);
         }
         
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        /* Snowflakes */
-        .snowflakes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-        
-        .snowflake {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: fall linear infinite;
-        }
-        
-        @keyframes fall {
-            to {
-                transform: translateY(100vh) rotate(360deg);
-            }
-        }
-        
-        /* Header */
         .header {
-            margin: 20px 0 30px;
-            position: relative;
-            z-index: 2;
+            margin-bottom: 20px;
+            z-index: 100;
         }
         
         h1 {
             color: #ff6b6b;
-            font-size: 2.8em;
+            font-size: 2.5em;
             margin-bottom: 10px;
-            text-shadow: 0 0 15px rgba(255, 107, 107, 0.7);
-            letter-spacing: 2px;
+            text-shadow: 0 0 20px #ff6b6b;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ff6b6b, 0 0 20px #ff6b6b; }
+            to { text-shadow: 0 0 20px #ff6b6b, 0 0 30px #ff5252, 0 0 40px #ff5252; }
         }
         
         .subtitle {
             color: #4ecdc4;
-            font-size: 1.3em;
-            margin-bottom: 10px;
-            font-weight: 300;
+            font-size: 1.2em;
+            margin-bottom: 30px;
         }
         
-        /* Christmas Tree Container */
-        .tree-container {
-            position: relative;
-            margin: 30px auto;
-            min-height: 300px;
-            z-index: 2;
-        }
-        
-        /* Starlight Tree */
-        #tree {
-            font-family: 'Courier New', monospace;
-            color: #2ecc71;
-            line-height: 1.2;
-            position: relative;
-            display: inline-block;
-            padding: 20px;
-        }
-        
-        .star {
-            color: gold;
-            font-size: 36px;
-            text-shadow: 0 0 20px gold;
-            animation: twinkle 1.5s infinite alternate;
-            margin-bottom: 15px;
+        /* Canvas for the starry tree */
+        #treeCanvas {
+            width: 600px;
+            height: 700px;
+            max-width: 90vw;
+            max-height: 70vh;
             display: block;
+            margin: 0 auto;
+            z-index: 10;
         }
         
-        @keyframes twinkle {
-            0% { opacity: 0.7; transform: scale(1); }
-            100% { opacity: 1; transform: scale(1.1); text-shadow: 0 0 30px gold, 0 0 40px gold; }
-        }
-        
-        .tree-row {
-            margin: 3px 0;
-            position: relative;
-        }
-        
-        .light {
-            animation: lightTwinkle 2s infinite;
-            animation-delay: calc(var(--delay) * 0.5s);
-            position: absolute;
-        }
-        
-        @keyframes lightTwinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-        
-        .trunk {
-            color: #8B4513;
-            margin-top: 10px;
-            font-size: 24px;
-        }
-        
-        /* Buttons */
-        .button-container {
-            margin: 40px 0;
-            z-index: 2;
-            position: relative;
+        .controls {
+            margin: 30px auto;
+            z-index: 100;
         }
         
         .magic-button {
@@ -150,40 +77,45 @@
             box-shadow: 0 5px 20px rgba(255, 107, 107, 0.5);
             font-weight: bold;
             letter-spacing: 1px;
+            margin: 10px;
+            z-index: 100;
+            position: relative;
         }
         
         .magic-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(255, 107, 107, 0.7);
-            background: linear-gradient(45deg, #ff5252, #ff9800);
         }
         
-        /* Letter Section */
         .letter-container {
             display: none;
-            background: rgba(255, 255, 255, 0.95);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 249, 230, 0.95);
             border-radius: 15px;
             padding: 30px;
-            margin: 30px auto;
+            width: 90%;
             max-width: 700px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            position: relative;
-            z-index: 2;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
             text-align: center;
         }
         
         .letter-container.active {
             display: block;
-            animation: fadeIn 0.8s ease;
+            animation: fadeInScale 0.8s ease;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
         
         .letter-header {
-            text-align: center;
             margin-bottom: 25px;
             padding-bottom: 15px;
             border-bottom: 3px solid #ffab91;
@@ -191,19 +123,20 @@
         
         .letter-header h2 {
             color: #d84315;
-            font-size: 2.2em;
+            font-size: 2em;
             margin-bottom: 10px;
         }
         
-        .handwritten-letter {
+        .letter-image {
             max-width: 100%;
+            max-height: 400px;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
             margin: 20px auto;
             display: block;
+            border: 5px solid white;
         }
         
-        /* Back Button */
         .back-button {
             background: #2196f3;
             color: white;
@@ -214,268 +147,482 @@
             cursor: pointer;
             margin-top: 25px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
         }
         
         .back-button:hover {
             background: #1976d2;
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(33, 150, 243, 0.4);
         }
         
-        /* Footer */
         .footer {
-            margin-top: 40px;
+            margin-top: 20px;
             color: #81c784;
             font-style: italic;
-            font-size: 1.1em;
+            font-size: 1em;
+            z-index: 100;
         }
         
-        .heart {
-            color: #ff6b6b;
-            animation: heartbeat 1.5s infinite;
-            display: inline-block;
-            margin: 0 5px;
+        /* Starfield background */
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
         }
         
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+        /* Overlay when letter is open */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+        
+        .overlay.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         /* Responsive */
         @media (max-width: 768px) {
-            h1 { font-size: 2.2em; }
-            .subtitle { font-size: 1.1em; }
-            .magic-button { padding: 15px 35px; font-size: 1.1em; }
-            .letter-container { padding: 20px; }
+            h1 { font-size: 2em; }
+            .subtitle { font-size: 1em; }
+            #treeCanvas { width: 95vw; height: 60vh; }
+            .magic-button { padding: 15px 30px; font-size: 1.1em; }
+            .letter-container { padding: 20px; width: 95%; }
         }
     </style>
 </head>
 <body>
-    <!-- Snow Background -->
-    <div class="snowflakes" id="snowflakes"></div>
+    <!-- Starfield Background -->
+    <canvas id="starfield"></canvas>
     
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1>🎄 Merry Christmas, My Dear! 🎄</h1>
-            <p class="subtitle">A special surprise is waiting for you in this magical season</p>
+    <!-- Overlay for letter -->
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="header">
+        <h1>🎄 A Christmas Miracle for You 🎄</h1>
+        <p class="subtitle">From screen to starlight, from code to romance</p>
+    </div>
+    
+    <!-- Canvas for Dynamic Tree -->
+    <canvas id="treeCanvas"></canvas>
+    
+    <div class="controls">
+        <button class="magic-button" id="showLetter">
+            ✨ Open Your Christmas Letter ✨
+        </button>
+    </div>
+    
+    <!-- Letter Container -->
+    <div class="letter-container" id="letter">
+        <div class="letter-header">
+            <h2>💌 My Handwritten Letter to You</h2>
+            <p style="color: #666;">Every word is written from my heart</p>
         </div>
         
-        <!-- Christmas Tree -->
-        <div class="tree-container">
-            <div id="tree"></div>
-        </div>
+        <!-- Your handwritten letter image -->
+        <img src="https://images.unsplash.com/photo-1579273166152-d725a4e2b755?w=600&q=80" 
+             alt="My handwritten Christmas letter to you"
+             class="letter-image"
+             id="letterImage">
+        <p style="color: #777; margin-top: 15px; font-style: italic;">
+            Scroll if needed to read every heartfelt word
+        </p>
         
-        <!-- Button -->
-        <div class="button-container">
-            <button class="magic-button" id="showLetter">
-                ✨ Open Your Special Letter ✨
-            </button>
-        </div>
-        
-        <!-- Letter Section -->
-        <div class="letter-container" id="letter">
-            <div class="letter-header">
-                <h2>💌 A Christmas Letter for You</h2>
-                <p style="color: #666;">From my heart to yours</p>
-            </div>
-            
-            <!-- Your handwritten letter image -->
-            <img src="https://ibb.co/Q77pPRFS" 
-                 alt="Handwritten Christmas Letter" 
-                 class="handwritten-letter"
-                 id="letterImage">
-            <p style="color: #777; margin-top: 15px; font-style: italic;">Every word is written specially for you</p>
-            
-            <!-- Back Button -->
-            <div>
-                <button class="back-button" id="backToTree">
-                    🎄 Back to Christmas Tree 🎄
-                </button>
-            </div>
-        </div>
-        
-        <!-- Footer -->
-        <div class="footer">
-            <p>May your world be filled with warmth and magic this Christmas <span class="heart">💝</span></p>
-            <p style="font-size: 0.9em; margin-top: 10px; color: #4ecdc4;">From screen to starlight, from code to romance</p>
-        </div>
+        <button class="back-button" id="backToTree">
+            🎄 Back to the Magic Tree 🎄
+        </button>
+    </div>
+    
+    <div class="footer">
+        <p>May this Christmas fill your world with wonder and warmth <span style="color:#ff6b6b">❤️</span></p>
     </div>
 
     <script>
-        // Create snowflakes
-        function createSnowflakes() {
-            const snowflakes = document.getElementById('snowflakes');
-            for (let i = 0; i < 60; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake';
-                const size = Math.random() * 5 + 2;
-                snowflake.style.width = `${size}px`;
-                snowflake.style.height = `${size}px`;
-                snowflake.style.left = `${Math.random() * 100}vw`;
-                snowflake.style.animationDuration = `${Math.random() * 3 + 4}s`;
-                snowflake.style.animationDelay = `${Math.random() * 5}s`;
-                snowflake.style.opacity = Math.random() * 0.7 + 0.3;
-                snowflakes.appendChild(snowflake);
+        // ============================================
+        // 1. STARFIELD BACKGROUND (Like in the video)
+        // ============================================
+        const starfield = document.getElementById('starfield');
+        const ctxStars = starfield.getContext('2d');
+        starfield.width = window.innerWidth;
+        starfield.height = window.innerHeight;
+
+        let stars = [];
+        const STAR_COUNT = 400;
+
+        class Star {
+            constructor() {
+                this.x = Math.random() * starfield.width;
+                this.y = Math.random() * starfield.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speed = Math.random() * 0.5 + 0.2;
+                this.brightness = Math.random() * 0.5 + 0.5;
+            }
+            
+            update() {
+                this.y += this.speed;
+                if (this.y > starfield.height) {
+                    this.y = 0;
+                    this.x = Math.random() * starfield.width;
+                }
+            }
+            
+            draw() {
+                ctxStars.beginPath();
+                ctxStars.fillStyle = `rgba(255, 255, 255, ${this.brightness})`;
+                ctxStars.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctxStars.fill();
             }
         }
+
+        // Initialize stars
+        for (let i = 0; i < STAR_COUNT; i++) {
+            stars.push(new Star());
+        }
+
+        function animateStars() {
+            ctxStars.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctxStars.fillRect(0, 0, starfield.width, starfield.height);
+            
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+            
+            requestAnimationFrame(animateStars);
+        }
+
+        // ============================================
+        // 2. DYNAMIC STARLIGHT CHRISTMAS TREE
+        // ============================================
+        const canvas = document.getElementById('treeCanvas');
+        const ctx = canvas.getContext('2d');
         
-        // Create starlight Christmas tree (like in the Douyin video)
-        function createStarlightTree() {
-            const tree = document.getElementById('tree');
-            const height = 9;
-            let treeHtml = '';
+        // Set canvas size
+        function resizeCanvas() {
+            const containerWidth = Math.min(600, window.innerWidth * 0.9);
+            const containerHeight = Math.min(700, window.innerHeight * 0.7);
+            canvas.width = containerWidth;
+            canvas.height = containerHeight;
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Tree particles
+        let particles = [];
+        const PARTICLE_COUNT = 150;
+        const TREE_COLORS = [
+            '#2ecc71', '#27ae60', '#229954', // Greens
+            '#FF5252', '#FFEB3B', '#4FC3F7', '#E040FB' // Decorations
+        ];
+
+        class Particle {
+            constructor(x, y, isStar = false) {
+                this.x = x;
+                this.y = y;
+                this.originalX = x;
+                this.originalY = y;
+                this.size = isStar ? Math.random() * 4 + 2 : Math.random() * 3 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.color = isStar ? 
+                    TREE_COLORS[Math.floor(Math.random() * 4) + 3] : // Decoration colors
+                    TREE_COLORS[Math.floor(Math.random() * 3)]; // Green colors
+                this.opacity = Math.random() * 0.5 + 0.5;
+                this.pulseSpeed = Math.random() * 0.05 + 0.02;
+                this.pulseOffset = Math.random() * Math.PI * 2;
+                this.isStar = isStar;
+                this.twinkleSpeed = Math.random() * 0.1 + 0.05;
+            }
             
-            // Star at the top with strong glow
-            treeHtml += '<div class="star">★</div>';
-            
-            // Create tree rows
-            for (let i = 0; i < height; i++) {
-                const spaces = '&nbsp;'.repeat(height - i - 1);
-                let row = '';
-                const width = 2 * i + 1;
+            update(time) {
+                // Gentle floating motion
+                this.x = this.originalX + Math.sin(time * this.speedX) * 5;
+                this.y = this.originalY + Math.cos(time * this.speedY) * 5;
                 
-                for (let j = 0; j < width; j++) {
-                    const rand = Math.random();
-                    // Add sparkling lights
-                    if (rand < 0.25) {
-                        const colors = ['#FF5252', '#4FC3F7', '#FFEB3B', '#E040FB', '#69F0AE'];
-                        const color = colors[Math.floor(Math.random() * colors.length)];
-                        row += `<span class="light" style="color:${color}; --delay:${j};">●</span>`;
-                    } else if (rand < 0.3) {
-                        // Add decorations
-                        const decorations = ['🔴', '🔵', '🟡', '🎀', '💎', '✨'];
-                        row += decorations[Math.floor(Math.random() * decorations.length)];
-                    } else {
-                        // Tree parts with gradient color
-                        const greenShades = ['#2ecc71', '#27ae60', '#229954'];
-                        const shade = greenShades[Math.floor(Math.random() * greenShades.length)];
-                        row += `<span style="color:${shade}">▲</span>`;
+                // Twinkling effect
+                this.opacity = 0.5 + Math.sin(time * this.twinkleSpeed + this.pulseOffset) * 0.5;
+                
+                // Stars twinkle more
+                if (this.isStar) {
+                    this.opacity = 0.7 + Math.sin(time * this.twinkleSpeed * 2 + this.pulseOffset) * 0.3;
+                }
+            }
+            
+            draw() {
+                ctx.beginPath();
+                
+                if (this.isStar) {
+                    // Draw star shape
+                    const spikes = 5;
+                    const outerRadius = this.size;
+                    const innerRadius = this.size / 2;
+                    
+                    let rotation = Math.PI / 2 * 3;
+                    let x = this.x;
+                    let y = this.y;
+                    let step = Math.PI / spikes;
+                    
+                    ctx.moveTo(x, y - outerRadius);
+                    
+                    for (let i = 0; i < spikes; i++) {
+                        x = this.x + Math.cos(rotation) * outerRadius;
+                        y = this.y + Math.sin(rotation) * outerRadius;
+                        ctx.lineTo(x, y);
+                        rotation += step;
+                        
+                        x = this.x + Math.cos(rotation) * innerRadius;
+                        y = this.y + Math.sin(rotation) * innerRadius;
+                        ctx.lineTo(x, y);
+                        rotation += step;
+                    }
+                    
+                    ctx.lineTo(this.x, this.y - outerRadius);
+                    ctx.closePath();
+                    ctx.fillStyle = `rgba(255, 215, 0, ${this.opacity})`; // Gold for stars
+                } else {
+                    // Draw circle for tree particles
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `${this.color}${Math.floor(this.opacity * 255).toString(16).padStart(2, '0')}`;
+                }
+                
+                ctx.fill();
+                
+                // Add glow effect for stars
+                if (this.isStar) {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size * 1.5, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 215, 0, ${this.opacity * 0.3})`;
+                    ctx.fill();
+                }
+            }
+        }
+
+        // Create tree shape with particles
+        function createTree() {
+            particles = [];
+            const centerX = canvas.width / 2;
+            const baseY = canvas.height - 50;
+            const treeHeight = canvas.height * 0.6;
+            
+            // Create tree trunk
+            for (let i = 0; i < 20; i++) {
+                const x = centerX + (Math.random() - 0.5) * 40;
+                const y = baseY - i * 3;
+                particles.push(new Particle(x, y, false));
+            }
+            
+            // Create tree branches (triangle shape)
+            const layers = 12;
+            for (let layer = 0; layer < layers; layer++) {
+                const layerHeight = treeHeight * (layer / layers);
+                const y = baseY - layerHeight - 50;
+                const width = treeHeight * (1 - layer / layers) * 0.6;
+                
+                const particlesInLayer = layer === 0 ? 5 : Math.floor(width / 5);
+                
+                for (let i = 0; i < particlesInLayer; i++) {
+                    const x = centerX + (Math.random() - 0.5) * width;
+                    const isStar = Math.random() > 0.7 && layer < layers - 3;
+                    particles.push(new Particle(x, y, isStar));
+                    
+                    // Add some particles above for thickness
+                    if (Math.random() > 0.5) {
+                        particles.push(new Particle(x, y - Math.random() * 10, false));
                     }
                 }
-                
-                treeHtml += `<div class="tree-row">${spaces}${row}</div>`;
             }
             
-            // Trunk
-            treeHtml += '<div class="trunk">┃ ┃</div>';
-            treeHtml += '<div class="trunk">┃ ┃</div>';
+            // Add star at the top
+            const topStar = new Particle(centerX, baseY - treeHeight - 40, true);
+            topStar.size = 8;
+            topStar.color = '#FFD700';
+            particles.push(topStar);
             
-            // Gifts under the tree
-            treeHtml += '<div style="margin-top: 25px;">';
-            treeHtml += '<span style="margin: 0 10px; font-size: 28px;">🎁</span>';
-            treeHtml += '<span style="margin: 0 10px; font-size: 28px;">🎁</span>';
-            treeHtml += '<span style="margin: 0 10px; font-size: 28px;">🎁</span>';
-            treeHtml += '</div>';
-            
-            tree.innerHTML = treeHtml;
-            
-            // Add more twinkling effect to lights
-            setTimeout(() => {
-                const lights = document.querySelectorAll('.light');
-                lights.forEach(light => {
-                    light.style.animation = `lightTwinkle ${1 + Math.random() * 2}s infinite`;
-                });
-            }, 100);
+            // Add some floating stars around
+            for (let i = 0; i < 15; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height * 0.7;
+                particles.push(new Particle(x, y, true));
+            }
         }
-        
-        // Show letter with your handwritten image
+
+        let time = 0;
+        function animateTree() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw gradient background
+            const gradient = ctx.createRadialGradient(
+                canvas.width / 2, canvas.height / 2, 0,
+                canvas.width / 2, canvas.height / 2, canvas.width
+            );
+            gradient.addColorStop(0, 'rgba(12, 36, 97, 0.3)');
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0.8)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Update and draw particles
+            particles.forEach(particle => {
+                particle.update(time);
+                particle.draw();
+            });
+            
+            time += 0.05;
+            requestAnimationFrame(animateTree);
+        }
+
+        // ============================================
+        // 3. LETTER FUNCTIONS
+        // ============================================
         document.getElementById('showLetter').addEventListener('click', function() {
-            const letter = document.getElementById('letter');
-            const tree = document.getElementById('tree');
-            
-            // Fade out tree
-            tree.style.opacity = '0.3';
-            tree.style.transition = 'opacity 0.5s';
-            
-            // Show letter with animation
-            letter.classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+            document.getElementById('letter').classList.add('active');
             this.style.display = 'none';
             
-            // Create floating hearts effect
-            createHeartsEffect();
-            
-            // Play gentle sound (optional)
-            playGentleSound();
+            // Add floating hearts
+            createFloatingHearts();
         });
         
-        // Back to tree
         document.getElementById('backToTree').addEventListener('click', function() {
-            const letter = document.getElementById('letter');
-            const tree = document.getElementById('tree');
-            const showButton = document.getElementById('showLetter');
-            
-            letter.classList.remove('active');
-            tree.style.opacity = '1';
-            showButton.style.display = 'block';
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('letter').classList.remove('active');
+            document.getElementById('showLetter').style.display = 'block';
         });
         
-        // Create floating hearts effect
-        function createHeartsEffect() {
-            const hearts = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🤎', '🖤', '🤍'];
-            
-            for (let i = 0; i < 12; i++) {
+        // Close letter when clicking overlay
+        document.getElementById('overlay').addEventListener('click', function() {
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('letter').classList.remove('active');
+            document.getElementById('showLetter').style.display = 'block';
+        });
+
+        function createFloatingHearts() {
+            const hearts = ['❤️', '🧡', '💛', '💚', '💙', '💜'];
+            for (let i = 0; i < 8; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('div');
-                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
                     heart.style.position = 'fixed';
-                    heart.style.left = `${Math.random() * 100}vw`;
+                    heart.style.left = Math.random() * 100 + 'vw';
                     heart.style.top = '100vh';
-                    heart.style.fontSize = `${Math.random() * 25 + 20}px`;
-                    heart.style.zIndex = '9999';
+                    heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                    heart.style.zIndex = '1001';
                     heart.style.pointerEvents = 'none';
-                    heart.style.animation = `floatUp ${2 + Math.random() * 2}s ease-out forwards`;
+                    heart.style.animation = `floatUp ${2 + Math.random() * 3}s ease-out forwards`;
                     document.body.appendChild(heart);
                     
-                    // Remove heart after animation
-                    setTimeout(() => {
-                        if (heart.parentNode) {
-                            heart.parentNode.removeChild(heart);
-                        }
-                    }, 3000);
-                }, i * 150);
+                    setTimeout(() => heart.remove(), 3000);
+                }, i * 200);
             }
             
-            // Add floating animation
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes floatUp {
-                    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-                    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-                }
+            // Add CSS animation
+            if (!document.getElementById('heartAnimation')) {
+                const style = document.createElement('style');
+                style.id = 'heartAnimation';
+                style.textContent = `
+                    @keyframes floatUp {
+                        0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+                        100% { transform: translateY(-100vh) rotate(360deg) scale(0); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        // ============================================
+        // 4. IMAGE HANDLING
+        // ============================================
+        const letterImage = document.getElementById('letterImage');
+        
+        // FALLBACK: If image fails to load, show text version
+        letterImage.onerror = function() {
+            console.log('Image failed to load, showing text fallback');
+            
+            const textFallback = document.createElement('div');
+            textFallback.style.cssText = `
+                background: linear-gradient(to right, #fff9e6, #fff3e0);
+                padding: 25px;
+                border-radius: 10px;
+                text-align: left;
+                line-height: 1.8;
+                font-family: 'Courier New', monospace;
+                font-size: 1.1em;
+                color: #5d4037;
+                white-space: pre-line;
+                border: 3px double #ffab91;
+                margin: 20px auto;
+                max-width: 600px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             `;
-            document.head.appendChild(style);
-        }
-        
-        // Play gentle sound effect (optional)
-        function playGentleSound() {
-            // You can add a gentle sound here if desired
-            // For example: const audio = new Audio('gentle-bell.mp3');
-            // audio.volume = 0.3;
-            // audio.play();
-        }
-        
-        // Initialize everything when page loads
-        window.onload = function() {
-            createSnowflakes();
-            createStarlightTree();
             
-            // IMPORTANT: Replace with your actual handwritten letter image URL
-            // You need to upload your "圣诞信.png" to an image hosting service
-            // Recommended free services: imgbb.com, imgur.com, or postimages.org
-            const letterImage = document.getElementById('letterImage');
-            // Replace this URL with your actual image URL:
-            // letterImage.src = "YOUR_IMAGE_URL_HERE";
+            textFallback.innerHTML = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-family: 'Brush Script MT', cursive; font-size: 2em; color: #d84315;">
+                        To My Dearest,
+                    </div>
+                    <div style="border-bottom: 2px solid #ffccbc; padding-bottom: 10px; margin-bottom: 20px;"></div>
+                </div>
+                
+                <p style="margin-bottom: 15px;">Hey Kai,</p>
+                
+                <p style="margin-bottom: 15px;">Just wanted to wish you a very Merry Christmas.</p>
+                
+                <p style="margin-bottom: 15px;">As the year winds down, I've been thinking about the things I'm grateful for and high on that list is meeting you. Getting to know you has been a real highlight of my 2025.</p>
+                
+                <p style="margin-bottom: 15px;">I've really cherished our badminton matches, shared lectures, and those long walks where we talked about everything and nothing. Thank you for always making me feel heard, and for your comforting hugs when I was feeling low.</p>
+                
+                <p style="margin-bottom: 15px;">Feels like our story's still being written. Wishing you all the best for 2026 - and beyond.</p>
+                
+                <div style="text-align: right; margin-top: 40px;">
+                    <div style="font-family: 'Brush Script MT', cursive; font-size: 1.5em; color: #bf360c;">
+                        Warmly,<br>
+                        Yiyu PAN
+                    </div>
+                    <div style="font-size: 2em; color: #ff6b6b; margin-top: 10px;">❤️</div>
+                </div>
+            `;
             
-            // For now, using a placeholder with your letter text
-            // Create a canvas with your letter text as fallback
-            createLetterFallback();
+            this.parentNode.replaceChild(textFallback, this);
         };
-        
-        
+
+        // ============================================
+        // 5. INITIALIZE EVERYTHING
+        // ============================================
+        window.onload = function() {
+            // Start animations
+            animateStars();
+            createTree();
+            animateTree();
+            
+            // IMPORTANT: Replace with your actual image URL
+            // After uploading your "圣诞信.png" to imgbb.com or similar
+            // letterImage.src = "https://YOUR_ACTUAL_IMAGE_URL_HERE";
+            
+            // For now, we'll use a placeholder that will trigger the fallback
+            // Remove this line after you add your real image URL
+            letterImage.src = "YOUR_IMAGE_URL_HERE";
+            
+            // Add window resize handler
+            window.addEventListener('resize', function() {
+                resizeCanvas();
+                createTree();
+            });
+        };
     </script>
 </body>
 </html>
